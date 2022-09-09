@@ -44,9 +44,7 @@ pub mod pallet {
 	#[pallet::event]
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config> {
-		/// Event documentation should end with an array that provides descriptive names for event
-		/// parameters. [something, who]
-		SomethingStored(u32, T::AccountId),
+		Generated([u8; 32]),
 	}
 
 	// Errors inform users that something went wrong.
@@ -79,23 +77,17 @@ pub mod pallet {
 			ice_primitive::verify(signature_bytes, group_key_bytes, &message_hash).map_err(|_| DispatchError::BadOrigin)
 		}
 
-		/// An example dispatchable that may throw a custom error.
+		
 		#[pallet::weight(10_000 + T::DbWeight::get().reads_writes(1,1))]
-		pub fn cause_error(origin: OriginFor<T>) -> DispatchResult {
+		pub fn generate_key(origin: OriginFor<T>) -> DispatchResult {
 			let _who = ensure_signed(origin)?;
 
-			// Read a value from storage.
-			match <Something<T>>::get() {
-				// Return an error if the value has not been set.
-				None => return Err(Error::<T>::NoneValue.into()),
-				Some(old) => {
-					// Increment the value read from storage; will error in the event of overflow.
-					let new = old.checked_add(1).ok_or(Error::<T>::StorageOverflow)?;
-					// Update the value in storage with the incremented result.
-					<Something<T>>::put(new);
-					Ok(())
-				},
-			}
+			// Unwrap for now; for show
+			let key = ice_primitive::generate().unwrap();
+
+			Self::deposit_event(Event::<T>::Generated(key));
+
+			Ok(())
 		}
 	}
 }

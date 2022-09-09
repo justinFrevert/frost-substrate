@@ -6,6 +6,7 @@ edition = "2021"
 [dependencies]
 sp-runtime-interface = { version = "6.0.0", path = "../../../../primitives/runtime-interface", default-features = false }
 ice-frost = { path = "../../../../../frost", default-features = false, features = ["alloc", "u64_backend"] }
+log = "0.4.5"
 
 [features]
 default = ["std"]
