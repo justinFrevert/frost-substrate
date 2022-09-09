@@ -1,0 +1,15 @@
+[package]
+name = "substrate-dmi"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+ndarray = { version = "0.15.6", features = ["blas"], default-features = false }
+rust-dmi = { path = "../../../../rust-dmi", default-features = false }
+
+[features]
+default = ["std"]
+std = [
+    "ndarray/std",
+    "rust-dmi/std"
+]

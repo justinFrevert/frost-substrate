@@ -2991,6 +2991,7 @@ name = "ice-primitive"
 version = "0.1.0"
 dependencies = [
  "ice-frost",
+ "log",
  "sp-runtime-interface",
 ]
 
